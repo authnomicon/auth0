@@ -22,6 +22,12 @@
     }
   ],
   "main": "./lib",
+  "assembly": {
+    "namespace": "opt/auth0",
+    "components": [
+      "mgmt/v2/client"
+    ]
+  },
   "dependencies": {
     "auth0": "^2.5.0"
   },
