@@ -25,6 +25,7 @@
   "assembly": {
     "namespace": "opt/auth0",
     "components": [
+      "auth/client",
       "mgmt/v2/client"
     ]
   },
