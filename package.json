@@ -29,7 +29,8 @@
     ]
   },
   "dependencies": {
-    "auth0": "^2.5.0"
+    "auth0": "^2.5.0",
+    "auth0-js": "^8.6.0"
   },
   "devDependencies": {
     "make-node": "^0.3.0",
