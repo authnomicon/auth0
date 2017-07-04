@@ -32,12 +32,15 @@
   },
   "dependencies": {
     "auth0": "^2.5.0",
-    "auth0-js": "^8.6.0"
+    "auth0-js": "^8.6.0",
+    "auth0-guardian-js": "^0.2.5"
   },
   "devDependencies": {
     "make-node": "^0.3.0",
     "mocha": "^2.0.0",
-    "chai": "^3.0.0"
+    "chai": "^3.0.0",
+    "sinon": "^1.17.0",
+    "proxyquire": "^1.7.10"
   },
   "scripts": {
     "test": "node_modules/.bin/mocha test/*.test.js"
