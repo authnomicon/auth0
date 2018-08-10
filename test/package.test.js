@@ -11,7 +11,7 @@ describe('nodex-auth0', function() {
     it('should have assembly metadata', function() {
       expect(json.assembly.namespace).to.equal('opt/auth0');
       
-      expect(json.assembly.components).to.have.length(3);
+      expect(json.assembly.components).to.have.length(4);
       expect(json.assembly.components).to.include('mgmt/v2/client');
     });
   });

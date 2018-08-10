@@ -25,13 +25,14 @@
   "assembly": {
     "namespace": "opt/auth0",
     "components": [
+      "ds/protocolplugin",
       "auth/client",
       "mgmt/v2/client",
       "guardian/client"
     ]
   },
   "dependencies": {
-    "auth0": "^2.5.0",
+    "auth0": "^2.11.0",
     "auth0-js": "^8.6.0",
     "auth0-guardian-js": "^0.2.5"
   },
