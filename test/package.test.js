@@ -1,6 +1,7 @@
 /* global describe, it */
 
 var expect = require('chai').expect;
+var sinon = require('sinon');
 
 
 describe('nodex-auth0', function() {
@@ -22,4 +23,9 @@ describe('nodex-auth0', function() {
     }).to.throw(Error).with.property('code', 'MODULE_NOT_FOUND');
   });
   
+});
+
+
+afterEach(function() {
+  sinon.restore();
 });
