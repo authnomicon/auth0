@@ -10,7 +10,7 @@ describe('nodex-auth0', function() {
     var json = require('../package.json');
     
     it('should have assembly metadata', function() {
-      expect(json.assembly.namespace).to.equal('opt/auth0');
+      expect(json.assembly.namespace).to.equal('io.modulate/vnd/auth0');
       
       expect(json.assembly.components).to.have.length(7);
       expect(json.assembly.components).to.include('mgmt/v2/client');

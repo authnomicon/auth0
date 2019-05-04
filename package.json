@@ -23,7 +23,7 @@
   ],
   "main": "./app",
   "assembly": {
-    "namespace": "opt/auth0",
+    "namespace": "io.modulate/vnd/auth0",
     "components": [
       "directory",
       "credentials/password/oauth2token",
