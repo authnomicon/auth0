@@ -36,8 +36,11 @@
   },
   "dependencies": {
     "auth0": "^2.17.0",
+    "auth0-guardian-js": "^0.2.5",
     "auth0-js": "^8.6.0",
-    "auth0-guardian-js": "^0.2.5"
+    "jsonwebtoken": "^8.5.1",
+    "filter-obj": "^1.1.0",
+    "map-obj": "^3.1.0"
   },
   "devDependencies": {
     "make-node": "^0.3.0",
