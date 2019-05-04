@@ -4,7 +4,7 @@ var sinon = require('sinon');
 var factory = require('../../../app/guardian/browserish/credential');
 
 
-describe('auth0/client/browserish/credential', function() {
+describe.skip('auth0/client/browserish/credential', function() {
   
   it('should export factory function', function() {
     expect(factory).to.be.a('function');
