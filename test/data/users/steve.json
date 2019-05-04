@@ -1,0 +1,22 @@
+{
+  "email": "steve@example.com",
+  "email_verified": false,
+  "user_id": "auth0|5b6ce4a9e54355613fd4627c",
+  "picture": "https://s.gravatar.com/avatar/3c98114d8e479f5da382f3401a832375?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fst.png",
+  "nickname": "steve",
+  "identities": [
+    {
+      "user_id": "5b6ce4a9e54355613fd4627c",
+      "provider": "auth0",
+      "connection": "Username-Password-Authentication",
+      "isSocial": false
+    }
+  ],
+  "updated_at": "2019-05-04T22:16:06.607Z",
+  "created_at": "2018-08-10T01:04:41.253Z",
+  "name": "steve@example.com",
+  "last_password_reset": "2019-05-04T19:18:54.599Z",
+  "last_ip": "73.158.17.83",
+  "last_login": "2019-05-04T22:16:06.607Z",
+  "logins_count": 23
+}

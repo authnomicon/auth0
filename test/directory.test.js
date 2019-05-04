@@ -1,14 +1,14 @@
 var $require = require('proxyquire');
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var factory = require('../../../app/credentials/password/oauthro');
-var Client = require('../../../lib/authentication/legacy/roclient');
+var factory = require('../app/directory');
+var Client = require('../lib/management/v2/directoryclient');
 var AuthenticationClient = require('auth0').AuthenticationClient;
 var fs = require('fs');
-var StubCredentialStore = require('../../stubs/credentialstore');
+var StubCredentialStore = require('./stubs/credentialstore');
 
 
-describe('credentials/password/oauthro', function() {
+describe('directory', function() {
   
   it('should export factory function', function() {
     expect(factory).to.be.a('function');
@@ -17,17 +17,16 @@ describe('credentials/password/oauthro', function() {
   it('should be annotated', function() {
     expect(factory['@singleton']).to.equal(true);
     expect(factory['@implements']).to.equal('http://schemas.authnomicon.org/sd/IService');
-    expect(factory['@type']).to.equal('auth0-oauth-ro');
+    expect(factory['@type']).to.equal('auth0-directory');
   });
   
   describe('API', function() {
     var _creds = new StubCredentialStore();
     
     var ClientSpy = sinon.spy(Client);
-    var api = $require('../../../app/credentials/password/oauthro',
-      { '../../../lib/authentication/legacy/roclient': ClientSpy }
+    var api = $require('../app/directory',
+      { '../lib/management/v2/directoryclient': ClientSpy }
     )(_creds);
-    
     
     describe('.createConnection', function() {
       afterEach(function() {
@@ -58,13 +57,12 @@ describe('credentials/password/oauthro', function() {
     
   }); // API
   
-  describe('OAuthROClient', function() {
+  describe('DirectoryClient', function() {
     var _client = sinon.createStubInstance(AuthenticationClient);
     var ClientStub = sinon.stub().returns(_client);
-    var Client = $require('../../../lib/authentication/legacy/roclient',
-      { 'auth0': { AuthenticationClient: ClientStub } }
+    var Client = $require('../lib/management/v2/directoryclient',
+      { 'auth0': { ManagementClient: ClientStub } }
     );
-    
     
     describe('#connect', function() {
       
@@ -88,26 +86,22 @@ describe('credentials/password/oauthro', function() {
       
     }); // #connect
     
-    describe('#verify', function() {
+    describe('#get', function() {
       var client = new Client('https://hansonhq.auth0.com');
       client._creds = new StubCredentialStore();
       
-      beforeEach(function(done) {
+      before(function(done) {
         sinon.stub(client._creds, 'get').yieldsAsync(null, { username: 'wvaTP5EkEjKxGyLAIzUnsnG6uhyRUTkX', password: 'keyboard cat' });
         client.connect(done);
       });
       
-      it('should verify correct credentials', function(done) {
-        _client.oauth = {};
-        _client.oauth.signIn = sinon.stub().yieldsAsync(null, JSON.parse(fs.readFileSync('test/data/oauth/ro/output.json', 'utf8')));
+      it('should get user by id', function(done) {
+        _client.users = {};
+        _client.users.get = sinon.stub().yieldsAsync(null, JSON.parse(fs.readFileSync('test/data/users/steve.json', 'utf8')));
+        //_client.getUser.resolves(JSON.parse(fs.readFileSync('test/data/directory/johndoe.json', 'utf8')));
         
-        
-        client.verify('steve@example.com', 'p455w0rd', function(err, user) {
-          expect(_client.oauth.signIn).to.have.been.calledWith({
-            username: 'steve@example.com',
-            password: 'p455w0rd',
-            connection: 'Username-Password-Authentication'
-          });
+        client.get('auth0|5b6ce4a9e54355613fd4627c', function(err, user) {
+          expect(_client.users.get.getCall(0).args[0]).to.deep.equal({ id: 'auth0|5b6ce4a9e54355613fd4627c' });
           
           expect(err).to.be.null;
           expect(user).to.deep.equal({
@@ -115,10 +109,11 @@ describe('credentials/password/oauthro', function() {
           });
           done();
         });
-      }); // should verify correct credentials
+        
+      }); // should get user by id
       
-    }); // #verify
+    });
     
-  }); // OAuthROClient
+  }); // DirectoryClient
   
 });
