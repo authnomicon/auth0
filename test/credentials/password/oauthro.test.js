@@ -89,6 +89,33 @@ describe('credentials/password/oauthro', function() {
     }); // #connect
     
     describe('#verify', function() {
+      var client = new Client('http://www.example.com');
+      client._creds = new StubCredentialStore();
+      
+      beforeEach(function(done) {
+        sinon.stub(client._creds, 'get').yieldsAsync(null, { username: 'wvaTP5EkEjKxGyLAIzUnsnG6uhyRUTkX', password: 'keyboard cat' });
+        client.connect(done);
+      });
+      
+      it('should verify correct credentials', function(done) {
+        _client.oauth = {};
+        _client.oauth.signIn = sinon.stub().yieldsAsync(null, { foo: 'bar'});
+        
+        
+        client.verify('steve@example.com', 'p455w0rd', function(err, user) {
+          expect(_client.oauth.signIn).to.have.been.calledWith({
+            username: 'steve@example.com',
+            password: 'p455w0rd',
+            connection: 'Username-Password-Authentication'
+          });
+          
+          expect(err).to.be.null;
+          expect(user).to.deep.equal({
+            id: 'FIXME'
+          });
+          done();
+        });
+      }); // should verify correct credentials
       
     }); // #verify
     
