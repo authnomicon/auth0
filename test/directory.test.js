@@ -105,7 +105,10 @@ describe('directory', function() {
           
           expect(err).to.be.null;
           expect(user).to.deep.equal({
-            id: 'auth0|5b6ce4a9e54355613fd4627c'
+            id: 'auth0|5b6ce4a9e54355613fd4627c',
+            emails: [
+              { value: 'steve@example.com' }
+            ]
           });
           done();
         });
