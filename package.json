@@ -25,6 +25,7 @@
   "assembly": {
     "namespace": "opt/auth0",
     "components": [
+      "directory",
       "credentials/password/oauth2token",
       "credentials/password/oauthro",
       "ds/protocolplugin",
