@@ -99,7 +99,7 @@ describe('credentials/password/oauthro', function() {
       
       it('should verify correct credentials', function(done) {
         _client.oauth = {};
-        _client.oauth.signIn = sinon.stub().yieldsAsync(null, { foo: 'bar'});
+        _client.oauth.signIn = sinon.stub().yieldsAsync(null, JSON.parse(fs.readFileSync('test/data/oauth/ro/output.json', 'utf8')));
         
         
         client.verify('steve@example.com', 'p455w0rd', function(err, user) {
@@ -111,7 +111,7 @@ describe('credentials/password/oauthro', function() {
           
           expect(err).to.be.null;
           expect(user).to.deep.equal({
-            id: 'FIXME'
+            id: 'auth0|5b6ce4a9e54355613fd4627c'
           });
           done();
         });
