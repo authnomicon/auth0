@@ -18,8 +18,8 @@ exports = module.exports = function(creds) {
 };
 
 exports['@singleton'] = true;
-exports['@implements'] = 'http://schemas.authnomicon.org/sd/IService';
-exports['@type'] = 'auth0-oauth-ro';
+exports['@implements'] = 'http://i.bixbyjs.org/IService';
+exports['@name'] = 'auth0-oauth2-ro';
 exports['@require'] = [
   'http://i.bixbyjs.org/security/CredentialsStore'
 ];

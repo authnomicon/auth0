@@ -16,8 +16,8 @@ describe('credentials/password/oauthro', function() {
   
   it('should be annotated', function() {
     expect(factory['@singleton']).to.equal(true);
-    expect(factory['@implements']).to.equal('http://schemas.authnomicon.org/sd/IService');
-    expect(factory['@type']).to.equal('auth0-oauth-ro');
+    expect(factory['@implements']).to.equal('http://i.bixbyjs.org/IService');
+    expect(factory['@name']).to.equal('auth0-oauth2-ro');
   });
   
   describe('API', function() {
