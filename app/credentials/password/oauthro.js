@@ -7,7 +7,7 @@ exports = module.exports = function(creds) {
   // TODO: add inferType from URL method
   
   api.createConnection = function(options, connectListener) {
-    var client = new Client(options.url);
+    var client = new Client(options.cname);
     client._creds = creds;
     
     client.connect(connectListener);

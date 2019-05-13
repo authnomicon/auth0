@@ -26,6 +26,7 @@
     "namespace": "io.modulate/vnd/auth0",
     "components": [
       "directory",
+      "credentials/directory",
       "credentials/password/oauth2token",
       "credentials/password/oauthro",
       "ds/protocolplugin",
