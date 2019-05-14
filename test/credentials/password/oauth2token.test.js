@@ -17,7 +17,7 @@ describe('credentials/password/oauth2token', function() {
   it('should be annotated', function() {
     expect(factory['@singleton']).to.equal(true);
     expect(factory['@implements']).to.equal('http://i.bixbyjs.org/IService');
-    expect(factory['@name']).to.equal('auth0-oauth2-token; grant_types="password"');
+    expect(factory['@name']).to.equal('auth0-oauth2-token-password');
   });
   
   describe('API', function() {
@@ -37,20 +37,20 @@ describe('credentials/password/oauth2token', function() {
       it('should construct client', function() {
         sinon.stub(_creds, 'get').yieldsAsync(null, { username: 'wvaTP5EkEjKxGyLAIzUnsnG6uhyRUTkX', password: 'keyboard cat' });
         
-        var client = api.createConnection({ url: 'https://example.auth0.com' });
+        var client = api.createConnection({ cname: 'example.auth0.com' });
         
-        expect(ClientSpy).to.have.been.calledOnceWithExactly('https://example.auth0.com').and.calledWithNew;
+        expect(ClientSpy).to.have.been.calledOnceWithExactly('example.auth0.com').and.calledWithNew;
         expect(client).to.be.an.instanceof(Client);
       }); // should construct client
       
       it('should construct client and invoke callback', function(done) {
         sinon.stub(_creds, 'get').yieldsAsync(null, { username: 'wvaTP5EkEjKxGyLAIzUnsnG6uhyRUTkX', password: 'keyboard cat' });
         
-        var client = api.createConnection({ url: 'https://example.auth0.com' }, function() {
+        var client = api.createConnection({ cname: 'example.auth0.com' }, function() {
           done();
         });
         
-        expect(ClientSpy).to.have.been.calledOnceWithExactly('https://example.auth0.com').and.calledWithNew;
+        expect(ClientSpy).to.have.been.calledOnceWithExactly('example.auth0.com').and.calledWithNew;
         expect(client).to.be.an.instanceof(Client);
       }); // should construct client and invoke callback
       
@@ -68,7 +68,7 @@ describe('credentials/password/oauth2token', function() {
     describe('#connect', function() {
       
       it('should get credential and construct client', function(done) {
-        var client = new Client('https://hansonhq.auth0.com');
+        var client = new Client('hansonhq.auth0.com');
         client._creds = new StubCredentialStore();
         sinon.stub(client._creds, 'get').yieldsAsync(null, { username: 'wvaTP5EkEjKxGyLAIzUnsnG6uhyRUTkX', password: 'keyboard cat' });
         
@@ -88,7 +88,7 @@ describe('credentials/password/oauth2token', function() {
     }); // #connect
     
     describe('#verify', function() {
-      var client = new Client('https://hansonhq.auth0.com');
+      var client = new Client('hansonhq.auth0.com');
       client._creds = new StubCredentialStore();
       
       beforeEach(function(done) {

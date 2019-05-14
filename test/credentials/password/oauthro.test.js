@@ -74,7 +74,7 @@ describe('credentials/password/oauthro', function() {
         sinon.stub(client._creds, 'get').yieldsAsync(null, { username: 'wvaTP5EkEjKxGyLAIzUnsnG6uhyRUTkX', password: 'keyboard cat' });
         
         client.connect(function() {
-          expect(client._creds.get).to.have.been.calledOnceWith('hansonhq.auth0.com');
+          expect(client._creds.get).to.have.been.calledOnceWith('https://hansonhq.auth0.com');
           
           expect(ClientStub).to.have.been.calledOnceWithExactly({
             domain: 'hansonhq.auth0.com',

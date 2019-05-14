@@ -7,7 +7,7 @@ exports = module.exports = function(creds) {
   // TODO: add inferType from URL method
   
   api.createConnection = function(options, connectListener) {
-    var client = new Client(options.url);
+    var client = new Client(options.cname);
     client._creds = creds;
     
     client.connect(connectListener);
@@ -19,7 +19,7 @@ exports = module.exports = function(creds) {
 
 exports['@singleton'] = true;
 exports['@implements'] = 'http://i.bixbyjs.org/IService';
-exports['@name'] = 'auth0-oauth2-token; grant_types="password"';
+exports['@name'] = 'auth0-oauth2-token-password';
 exports['@require'] = [
   'http://i.bixbyjs.org/security/CredentialsStore'
 ];
