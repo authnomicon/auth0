@@ -12,7 +12,7 @@ describe('nodex-auth0', function() {
     it('should have assembly metadata', function() {
       expect(json.assembly.namespace).to.equal('io.modulate/vnd/auth0');
       
-      expect(json.assembly.components).to.have.length(9);
+      expect(json.assembly.components).to.have.length(10);
       expect(json.assembly.components).to.include('mgmt/v2/client');
     });
   });
