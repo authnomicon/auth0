@@ -18,6 +18,5 @@ exports['@singleton'] = true;
 exports['@implements'] = [ 'http://i.bixbyjs.org/IService', 'http://i.authnomicon.org/js/cs/IPasswordService' ];
 exports['@name'] = 'auth0-oauth2-token-password';
 exports['@require'] = [
-  'http://schemas.modulate.io/js/vnd/auth0/authentication',
-  'http://i.bixbyjs.org/security/CredentialsStore'
+  'http://schemas.modulate.io/js/vnd/auth0/authentication'
 ];
