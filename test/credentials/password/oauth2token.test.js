@@ -16,7 +16,7 @@ describe('credentials/password/oauth2token', function() {
   
   it('should be annotated', function() {
     expect(factory['@singleton']).to.equal(true);
-    expect(factory['@implements']).to.equal('http://i.bixbyjs.org/IService');
+    expect(factory['@implements']).to.deep.equal([ 'http://i.bixbyjs.org/IService', 'http://i.authnomicon.org/js/cs/IPasswordService' ]);
     expect(factory['@name']).to.equal('auth0-oauth2-token-password');
   });
   
@@ -37,7 +37,7 @@ describe('credentials/password/oauth2token', function() {
       it('should construct client', function() {
         sinon.stub(_creds, 'get').yieldsAsync(null, { username: 'wvaTP5EkEjKxGyLAIzUnsnG6uhyRUTkX', password: 'keyboard cat' });
         
-        var client = api.createConnection({ cname: 'example.auth0.com' });
+        var client = api.createConnection({ name: 'example.auth0.com' });
         
         expect(ClientSpy).to.have.been.calledOnceWithExactly('example.auth0.com').and.calledWithNew;
         expect(client).to.be.an.instanceof(Client);
@@ -46,7 +46,7 @@ describe('credentials/password/oauth2token', function() {
       it('should construct client and invoke callback', function(done) {
         sinon.stub(_creds, 'get').yieldsAsync(null, { username: 'wvaTP5EkEjKxGyLAIzUnsnG6uhyRUTkX', password: 'keyboard cat' });
         
-        var client = api.createConnection({ cname: 'example.auth0.com' }, function() {
+        var client = api.createConnection({ name: 'example.auth0.com' }, function() {
           done();
         });
         
