@@ -26,6 +26,7 @@
     "namespace": "io.modulate/vnd/auth0",
     "components": [
       "api/authentication",
+      "api/managementv2",
       "directory",
       "credentials/directory",
       "credentials/password/oauth2token",
