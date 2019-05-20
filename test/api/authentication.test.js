@@ -31,14 +31,13 @@ describe('api/authentication', function() {
     describe('.createConnection', function() {
       beforeEach(function() {
         sinon.stub(_keyring, 'get').withArgs('example.auth0.com').yieldsAsync(null, { username: 'wvaTP5EkEjKxGyLAIzUnsnG6uhyRUTkX', password: 'keyboard cat' })
-                                   .withArgs('mongodb.example.org').yieldsAsync(null);
+                                   .withArgs('public.auth0.com').yieldsAsync(null)
+                                   .withArgs('invalid.auth0.com').yieldsAsync(new Error('something went wrong'));
       });
       
       it('should resolve with client', function(done) {
         var promise = api.createConnection({ name: 'example.auth0.com' });
         promise.then(function(client) {
-          console.log('RESOLVED!');
-          
           expect(AuthenticationClientStub).to.have.been.calledOnceWithExactly({
             domain: 'example.auth0.com',
             clientId: 'wvaTP5EkEjKxGyLAIzUnsnG6uhyRUTkX',
@@ -48,6 +47,28 @@ describe('api/authentication', function() {
           done();
         }).catch(done);
       }); // should resolve with client
+      
+      it('should reject when credentials are not available', function(done) {
+        var promise = api.createConnection({ name: 'public.auth0.com' });
+        promise.then(function(client) {
+          done(new Error('should not resolve'));
+        }, function(err) {
+          expect(err).to.be.an.instanceof(Error);
+          expect(err.message).to.equal("Cannot find credentials for 'public.auth0.com'");
+          done();
+        }).catch(done);
+      }); // should reject when credentials are not available
+      
+      it('should reject when failing to obtain credentials', function(done) {
+        var promise = api.createConnection({ name: 'invalid.auth0.com' });
+        promise.then(function(client) {
+          done(new Error('should not resolve'));
+        }, function(err) {
+          expect(err).to.be.an.instanceof(Error);
+          expect(err.message).to.equal('something went wrong');
+          done();
+        }).catch(done);
+      }); // should reject when failing to obtain credentials
       
     }); // .createConnection
     
