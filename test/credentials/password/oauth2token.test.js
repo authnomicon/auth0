@@ -21,38 +21,32 @@ describe('credentials/password/oauth2token', function() {
   });
   
   describe('API', function() {
-    var _creds = new StubCredentialStore();
-    
+    var _auth0 = { createConnection: function(){} };
     var ClientSpy = sinon.spy(Client);
     var api = $require('../../../app/credentials/password/oauth2token',
       { '../../../lib/authentication/oauth/passwordclient': ClientSpy }
-    )(_creds);
+    )(_auth0);
     
     
     describe('.createConnection', function() {
+      beforeEach(function() {
+        sinon.stub(_auth0, 'createConnection').resolves(sinon.createStubInstance(AuthenticationClient));
+      });
+      
       afterEach(function() {
         ClientSpy.resetHistory();
       });
       
-      it('should construct client', function() {
-        sinon.stub(_creds, 'get').yieldsAsync(null, { username: 'wvaTP5EkEjKxGyLAIzUnsnG6uhyRUTkX', password: 'keyboard cat' });
-        
-        var client = api.createConnection({ name: 'example.auth0.com' });
-        
-        expect(ClientSpy).to.have.been.calledOnceWithExactly('example.auth0.com').and.calledWithNew;
-        expect(client).to.be.an.instanceof(Client);
-      }); // should construct client
-      
-      it('should construct client and invoke callback', function(done) {
-        sinon.stub(_creds, 'get').yieldsAsync(null, { username: 'wvaTP5EkEjKxGyLAIzUnsnG6uhyRUTkX', password: 'keyboard cat' });
-        
-        var client = api.createConnection({ name: 'example.auth0.com' }, function() {
+      it('should resolve with client', function(done) {
+        var promise = api.createConnection({ name: 'example.auth0.com' });
+        promise.then(function(client) {
+          expect(_auth0.createConnection).to.have.been.calledOnceWithExactly({ name: 'example.auth0.com' });
+          expect(ClientSpy).to.have.been.calledOnce.and.calledWithNew;
+          expect(ClientSpy.getCall(0).args[0]).to.be.an.instanceof(AuthenticationClient);
+          expect(client).to.be.an.instanceof(Client);
           done();
-        });
-        
-        expect(ClientSpy).to.have.been.calledOnceWithExactly('example.auth0.com').and.calledWithNew;
-        expect(client).to.be.an.instanceof(Client);
-      }); // should construct client and invoke callback
+        }).catch(done);
+      }); // should resolve with client
       
     }); // .createConnection
     
@@ -60,41 +54,9 @@ describe('credentials/password/oauth2token', function() {
   
   describe('PasswordClient', function() {
     var _client = sinon.createStubInstance(AuthenticationClient);
-    var ClientStub = sinon.stub().returns(_client);
-    var Client = $require('../../../lib/authentication/oauth/passwordclient',
-      { 'auth0': { AuthenticationClient: ClientStub } }
-    );
-    
-    describe('#connect', function() {
-      
-      it('should get credential and construct client', function(done) {
-        var client = new Client('hansonhq.auth0.com');
-        client._creds = new StubCredentialStore();
-        sinon.stub(client._creds, 'get').yieldsAsync(null, { username: 'wvaTP5EkEjKxGyLAIzUnsnG6uhyRUTkX', password: 'keyboard cat' });
-        
-        client.connect(function() {
-          expect(client._creds.get).to.have.been.calledOnceWith('hansonhq.auth0.com');
-          
-          expect(ClientStub).to.have.been.calledOnceWithExactly({
-            domain: 'hansonhq.auth0.com',
-            clientId: 'wvaTP5EkEjKxGyLAIzUnsnG6uhyRUTkX',
-            clientSecret: 'keyboard cat'
-          }).and.calledWithNew;
-          
-          done();
-        });
-      }); // should get credential and construct client
-      
-    }); // #connect
     
     describe('#verify', function() {
-      var client = new Client('hansonhq.auth0.com');
-      client._creds = new StubCredentialStore();
-      
-      beforeEach(function(done) {
-        sinon.stub(client._creds, 'get').yieldsAsync(null, { username: 'wvaTP5EkEjKxGyLAIzUnsnG6uhyRUTkX', password: 'keyboard cat' });
-        client.connect(done);
-      });
+      var client = new Client(_client);
       
       it('should verify correct credentials', function(done) {
         _client.oauth = {};
@@ -121,4 +83,4 @@ describe('credentials/password/oauth2token', function() {
     
   }); // PasswordClient
   
-});
+}); // credentials/password/oauth2token

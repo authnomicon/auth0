@@ -25,6 +25,7 @@
   "assembly": {
     "namespace": "io.modulate/vnd/auth0",
     "components": [
+      "api/authentication",
       "directory",
       "credentials/directory",
       "credentials/password/oauth2token",
