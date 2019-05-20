@@ -1,11 +1,11 @@
 var $require = require('proxyquire');
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var factory = require('../../app/api/authentication');
+var factory = require('../../app/api/managementv2');
 var auth0 = require('auth0');
 
 
-describe('api/authentication', function() {
+describe('api/managementv2', function() {
   
   it('should export factory function', function() {
     expect(factory).to.be.a('function');
@@ -14,17 +14,17 @@ describe('api/authentication', function() {
   it('should be annotated', function() {
     expect(factory['@singleton']).to.equal(true);
     expect(factory['@implements']).to.deep.equal([
-      'http://schemas.modulate.io/js/vnd/auth0/authentication',
+      'http://schemas.modulate.io/js/vnd/auth0/management/v2',
       'http://i.bixbyjs.org/IService'
     ]);
-    expect(factory['@name']).to.equal('auth0-authentication');
+    expect(factory['@name']).to.equal('auth0-management-v2');
   });
   
   describe('API', function() {
     var _keyring = { get: function(){} };
-    var AuthenticationClientStub = sinon.stub().returns(sinon.createStubInstance(auth0.AuthenticationClient));
-    var api = $require('../../app/api/authentication',
-      { 'auth0': { AuthenticationClient: AuthenticationClientStub } }
+    var ManagementClientStub = sinon.stub().returns(sinon.createStubInstance(auth0.ManagementClient));
+    var api = $require('../../app/api/managementv2',
+      { 'auth0': { ManagementClient: ManagementClientStub } }
     )(_keyring);
     
     describe('.createConnection', function() {
@@ -37,12 +37,12 @@ describe('api/authentication', function() {
       it('should resolve with client', function(done) {
         var promise = api.createConnection({ name: 'example.auth0.com' });
         promise.then(function(client) {
-          expect(AuthenticationClientStub).to.have.been.calledOnceWithExactly({
+          expect(ManagementClientStub).to.have.been.calledOnceWithExactly({
             domain: 'example.auth0.com',
             clientId: 'wvaTP5EkEjKxGyLAIzUnsnG6uhyRUTkX',
             clientSecret: 'keyboard cat',
           }).and.calledWithNew;
-          expect(client).to.be.an.instanceof(auth0.AuthenticationClient);
+          expect(client).to.be.an.instanceof(auth0.ManagementClient);
           done();
         }).catch(done);
       }); // should resolve with client
@@ -73,4 +73,4 @@ describe('api/authentication', function() {
     
   }); // API
   
-}); // api/authentication
+}); // api/managementv2
