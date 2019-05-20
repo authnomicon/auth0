@@ -54,31 +54,6 @@ describe('credentials/password/oauthro', function() {
   describe('OAuthROClient', function() {
     var _client = sinon.createStubInstance(AuthenticationClient);
     
-    
-    /*
-    describe('#connect', function() {
-      
-      it('should get credential and construct client', function(done) {
-        var client = new Client('hansonhq.auth0.com');
-        //client._creds = new StubCredentialStore();
-        sinon.stub(client._creds, 'get').yieldsAsync(null, { username: 'wvaTP5EkEjKxGyLAIzUnsnG6uhyRUTkX', password: 'keyboard cat' });
-        
-        client.connect(function() {
-          expect(client._creds.get).to.have.been.calledOnceWith('hansonhq.auth0.com');
-          
-          expect(ClientStub).to.have.been.calledOnceWithExactly({
-            domain: 'hansonhq.auth0.com',
-            clientId: 'wvaTP5EkEjKxGyLAIzUnsnG6uhyRUTkX',
-            clientSecret: 'keyboard cat'
-          }).and.calledWithNew;
-          
-          done();
-        });
-      }); // should get credential and construct client
-      
-    }); // #connect
-    */
-    
     describe('#verify', function() {
       var client = new Client(_client);
       
