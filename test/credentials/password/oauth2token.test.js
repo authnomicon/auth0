@@ -5,7 +5,6 @@ var factory = require('../../../app/credentials/password/oauth2token');
 var Client = require('../../../lib/authentication/oauth/passwordclient');
 var AuthenticationClient = require('auth0').AuthenticationClient;
 var fs = require('fs');
-var StubCredentialStore = require('../../stubs/credentialstore');
 
 
 describe('credentials/password/oauth2token', function() {
