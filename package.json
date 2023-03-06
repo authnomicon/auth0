@@ -24,7 +24,7 @@
   "main": "./app",
   "assembly": {
     "namespace": "io.modulate/vnd/auth0",
-    "components": [
+    "x_components": [
       "api/authentication",
       "api/managementv2",
       "directory",
@@ -37,7 +37,7 @@
       "guardian/client"
     ]
   },
-  "dependencies": {
+  "x_dependencies": {
     "auth0": "^2.17.0",
     "auth0-guardian-js": "^0.2.5",
     "auth0-js": "^8.6.0",
@@ -46,14 +46,17 @@
     "map-obj": "^3.1.0"
   },
   "devDependencies": {
-    "make-node": "^0.3.0",
-    "proxyquire": "^2.1.0",
-    "mocha": "^6.1.4",
     "chai": "^4.2.0",
+    "make-node": "^0.3.0",
+    "mocha": "^6.1.4",
+    "proxyquire": "^2.1.0",
     "sinon": "^7.3.2",
     "sinon-chai": "^3.3.0"
   },
   "scripts": {
     "test": "node_modules/.bin/mocha test/*.test.js"
+  },
+  "dependencies": {
+    "auth0": "^3.2.0"
   }
 }
