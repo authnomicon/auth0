@@ -24,6 +24,9 @@
   "main": "./app",
   "assembly": {
     "namespace": "io.modulate/vnd/auth0",
+    "components": [
+      "client"
+    ],
     "x_components": [
       "api/authentication",
       "api/managementv2",
